@@ -1,12 +1,9 @@
 (local coniferous {})
+(local window (require :window))
 
 (lambda open-tree []
   (local buf (vim.api.nvim_create_buf false true))
-  (local win-opts {:relative "editor"
-                   :width 40
-                   :height (vim.api.nvim_get_option :lines)
-                   :col 0
-                   :row 0})
+  (local win-opts (window.window-opts))
   (local win (vim.api.nvim_open_win buf true win-opts))
 
   (local files-tbl (io.popen "ls -a"))
