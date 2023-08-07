@@ -1,10 +1,13 @@
-(local coniferous {})
+(local conifer {})
 (local window (require :window))
+
+(var tree-win nil)
 
 (lambda open-tree []
   (local buf (vim.api.nvim_create_buf false true))
   (local win-opts (window.window-opts))
   (local win (vim.api.nvim_open_win buf true win-opts))
+  (set tree-win win)
 
   (local files-tbl (io.popen "ls -a"))
   (if (not files-tbl)
@@ -25,8 +28,21 @@
   (local namespace-opts {:hl_group "Title"
                          :end_line 0
                          :end_col first-line-length})
-  (vim.api.nvim_buf_set_extmark buf (vim.api.nvim_create_namespace :coniferous) 0 0 namespace-opts))
+  (vim.api.nvim_buf_set_extmark buf (vim.api.nvim_create_namespace :conifer) 0 0 namespace-opts))
 
-(tset coniferous :open-tree open-tree)
+(lambda close-tree []
+  (if tree-win
+      (do
+        (vim.api.nvim_win_close tree-win true)
+        (set tree-win nil))))
 
-coniferous
+(lambda toggle-tree []
+  (if (not tree-win)
+      (open-tree)
+      (close-tree)))
+
+(tset conifer :open-tree open-tree)
+(tset conifer :close-tree close-tree)
+(tset conifer :toggle-tree toggle-tree)
+
+conifer
