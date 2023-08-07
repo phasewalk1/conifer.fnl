@@ -1,4 +1,4 @@
-(local conifer {})
+(local module {})
 (local window (require :window))
 
 (var tree-win nil)
@@ -41,8 +41,8 @@
       (open-tree)
       (close-tree)))
 
-(tset conifer :open-tree open-tree)
-(tset conifer :close-tree close-tree)
-(tset conifer :toggle-tree toggle-tree)
+(tset module :open-tree open-tree)
+(tset module :close-tree close-tree)
+(tset module :toggle-tree toggle-tree)
 
-conifer
+module
